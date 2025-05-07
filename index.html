@@ -1,9 +1,103 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Benim GitHub Pages Sitem</title>
-  </head>
-  <body>
-    <h1>Merhaba dünya!</h1>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erendmrkndmr | Blog</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- 🌙 Dark Mode Toggle -->
+  <button id="toggle-theme" class="theme-button">🌙 Dark Mode</button>
+
+  <!-- 🧭 Navigation -->
+  <header class="navbar">
+    <nav>
+      <a href="#posts">📚 Posts</a>
+      <a href="#about">👤 About</a>
+      <a href="#contact">✉️ Contact</a>
+    </nav>
+  </header>
+
+  <!-- 👋 Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Hello, I'm Erendmrkndmr 👋</h1>
+      <p>I’m currently exploring the world of artificial intelligence and data science. In this blog, I share what I learn, build, and discover along the way.</p>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <!-- 🔍 Search -->
+    <input type="text" id="searchInput" placeholder="Search posts..." class="search-input" />
+
+    <!-- 📌 Blog Posts -->
+    <section id="posts">
+      <h2>📝 Blog Posts</h2>
+
+      <div class="grid">
+
+        <!-- Post 1 -->
+        <div class="blog-card">
+          <a href="blog/how-i-built-this.html">
+            <img src="images/how_i_built_this.png" alt="How I Built This Site">
+            <div class="blog-content">
+              <span class="badge">📘 Blog</span>
+              <h3>How I Built This Website</h3>
+              <p>A step-by-step explanation of how I created this blog using GitHub Pages and some basic HTML and CSS.</p>
+              <span class="date">May 6, 2025</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Medium Post -->
+        <div class="blog-card">
+            <a href="https://medium.com/@erendemirkandemir/the-rise-of-agentic-ai-is-artificial-intelligence-now-thinking-on-its-own-756c524b5fda" target="_blank">
+              <img src="images/agentic_ai.webp" alt="Agentic AI">
+              <div class="blog-content">
+                <span class="badge">📰 Medium</span>
+                <h3>The Rise of Agentic AI</h3>
+                <p>In this Medium article, I analyze how artificial intelligence is becoming increasingly autonomous and what that means for us.</p>
+                <span class="date">Feb 14, 2025</span>
+              </div>
+            </a>
+          </div>
+
+
+        <!-- Upcoming Post -->
+        <div class="blog-card">
+          <a href="#">
+            <img src="images/cv-ai.png" alt="Upcoming Medium Article">
+            <div class="blog-content">
+              <span class="badge">🧠 AI</span>
+              <h3>Medium Article</h3>
+              <p>I’ll share the process and article soon.</p>
+              <span class="date">Coming soon</span>
+            </div>
+          </a>
+        </div>
+
+        
+
+      </div>
+    </section>
+
+    <!-- 👤 About -->
+    <section id="about" style="margin-top: 4rem;">
+      <h2>👤 About Me</h2>
+      <p>I'm Eren, a tech enthusiast actively learning and experimenting in the fields of artificial intelligence and data science. Through this blog, I aim to document my learning journey, share my projects, and hopefully inspire others along the way.</p>
+    </section>
+
+    <!-- ✉️ Contact -->
+    <section id="contact" style="margin-top: 2rem;">
+      <h2>✉️ Contact</h2>
+      <p>You can reach me via GitHub: <a href="https://github.com/Erendmrkndmr" target="_blank">Erendmrkndmr</a></p>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+
+</body>
 </html>

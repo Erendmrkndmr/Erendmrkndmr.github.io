@@ -1,0 +1,142 @@
+:root {
+  --bg: #f9f9f9;
+  --text: #333;
+  --card: #ffffff;
+  --accent: #2563eb;
+}
+
+[data-theme="dark"] {
+  --bg: #111827;
+  --text: #f3f4f6;
+  --card: #1f2937;
+  --accent: #60a5fa;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.theme-button {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  z-index: 100;
+  background: var(--card);
+  color: var(--text);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.hero {
+  background: linear-gradient(to right, #dbeafe, #e0f2fe);
+  text-align: center;
+  padding: 4rem 2rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.search-input {
+  padding: 0.75rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.blog-card {
+  background: var(--card);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 1rem;
+}
+
+.blog-content h3 {
+  margin-top: 0.5rem;
+  color: var(--accent);
+  font-size: 1.25rem;
+}
+
+.blog-content p {
+  color: var(--text);
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.blog-content .date {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: #e0f2fe;
+  color: #0284c7;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #888;
+  padding: 2rem 1rem;
+  margin-top: 4rem;
+}
