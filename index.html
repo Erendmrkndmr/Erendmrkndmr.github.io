@@ -1,99 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Erendmrkndmr | Blog</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-gray-100">
 
   <!-- 🌙 Dark Mode Toggle -->
-  <button id="toggle-theme" class="theme-button">🌙 Dark Mode</button>
+  <button id="toggle-theme" class="theme-button fixed top-5 right-5 p-3 bg-blue-600 text-white rounded-full shadow-lg">🌙</button>
 
   <!-- 🧭 Navigation -->
-  <header class="navbar">
-    <nav>
-      <a href="#posts">📚 Posts</a>
-      <a href="#about">👤 About</a>
-      <a href="#contact">✉️ Contact</a>
+  <header class="bg-blue-600 text-white p-4">
+    <nav class="max-w-6xl mx-auto flex justify-between">
+      <a href="#posts" class="hover:underline">📚 Blog Posts</a>
+      <a href="#medium" class="hover:underline">📰 Medium Articles</a>
+      <a href="#about" class="hover:underline">👤 About</a>
+      <a href="#contact" class="hover:underline">✉️ Contact</a>
     </nav>
   </header>
 
   <!-- 👋 Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <h1>Hello, I'm Erendmrkndmr 👋</h1>
-      <p>I’m currently exploring the world of artificial intelligence and data science. In this blog, I share what I learn, build, and discover along the way.</p>
-    </div>
+  <section class="hero py-20 bg-blue-600 text-white text-center">
+    <h1 class="text-4xl font-bold">Hello, I'm Erendmrkndmr 👋</h1>
+    <p class="text-xl mt-4">Exploring AI and Data Science. Sharing my journey and knowledge here.</p>
   </section>
 
-  <main class="container">
+  <main class="max-w-6xl mx-auto px-4 py-10">
 
     <!-- 🔍 Search -->
-    <input type="text" id="searchInput" placeholder="Search posts..." class="search-input" />
+    <div class="text-center mb-8">
+      <input type="text" id="searchInput" placeholder="Search posts..." class="search-input p-2 w-full max-w-xs border rounded-lg shadow-lg">
+    </div>
 
-    <!-- 📌 Blog Posts -->
-    <section id="posts">
-      <h2>📝 Blog Posts</h2>
-
-      <div class="grid">
-
+    <!-- 📌 Blog Posts Section -->
+    <section id="posts" class="mb-16">
+      <h2 class="text-3xl font-bold mb-6">📚 Blog Posts</h2>
+      <div class="grid md:grid-cols-2 gap-8">
         <!-- Post 1 -->
-        <div class="blog-card">
+        <div class="blog-card bg-white p-4 rounded-lg shadow-lg">
           <a href="blog/how-i-built-this.html">
-            <img src="images/how_i_built_this.png" alt="How I Built This Site">
-            <div class="blog-content">
-              <span class="badge">📘 Blog</span>
-              <h3>How I Built This Website</h3>
+            <img src="images/how_i_built_this.png" alt="How I Built This Site" class="w-full h-48 object-cover rounded-lg">
+            <div class="blog-content mt-4">
+              <h3 class="text-xl font-semibold">How I Built This Website</h3>
               <p>A step-by-step explanation of how I created this blog using GitHub Pages and some basic HTML and CSS.</p>
-              <span class="date">May 6, 2025</span>
+              <span class="date text-gray-500">May 6, 2025</span>
             </div>
           </a>
         </div>
 
-        <!-- Medium Post -->
-        <div class="blog-card">
-            <a href="https://medium.com/@erendemirkandemir/the-rise-of-agentic-ai-is-artificial-intelligence-now-thinking-on-its-own-756c524b5fda" target="_blank">
-              <img src="images/agentic_ai.webp" alt="Agentic AI">
-              <div class="blog-content">
-                <span class="badge">📰 Medium</span>
-                <h3>The Rise of Agentic AI</h3>
-                <p>In this Medium article, I analyze how artificial intelligence is becoming increasingly autonomous and what that means for us.</p>
-                <span class="date">Feb 14, 2025</span>
-              </div>
-            </a>
-          </div>
+        <!-- Post 2 -->
+        <div class="blog-card bg-white p-4 rounded-lg shadow-lg">
+          <a href="blog/aws-ec2-setup.html">
+            <img src="images/no-image.jpg" alt="AWS EC2 Setup" class="w-full h-48 object-cover rounded-lg">
+            <div class="blog-content mt-4">
+              <h3 class="text-xl font-semibold">Setting Up a Static Site on AWS EC2</h3>
+              <p>A detailed guide on how I set up a static website using AWS EC2 and configured security and access settings.</p>
+              <span class="date text-gray-500">May 7, 2025</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
 
-
-        <!-- Upcoming Post -->
-        <div class="blog-card">
-          <a href="#">
-            <img src="images/cv-ai.png" alt="Upcoming Medium Article">
-            <div class="blog-content">
-              <span class="badge">🧠 AI</span>
-              <h3>Medium Article</h3>
-              <p>I’ll share the process and article soon.</p>
-              <span class="date">Coming soon</span>
+    <!-- 📰 Medium Articles Section -->
+    <section id="medium" class="mb-16">
+      <h2 class="text-3xl font-bold mb-6">📰 Medium Articles</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Medium Post 1 -->
+        <div class="blog-card bg-white p-4 rounded-lg shadow-lg">
+          <a href="https://medium.com/@erendemirkandemir/the-rise-of-agentic-ai-is-artificial-intelligence-now-thinking-on-its-own-756c524b5fda" target="_blank">
+            <img src="images/agentic_ai.webp" alt="Agentic AI" class="w-full h-48 object-cover rounded-lg">
+            <div class="blog-content mt-4">
+              <h3 class="text-xl font-semibold">The Rise of Agentic AI</h3>
+              <p>In this Medium article, I analyze how artificial intelligence is becoming increasingly autonomous and what that means for us.</p>
+              <span class="date text-gray-500">Feb 14, 2025</span>
             </div>
           </a>
         </div>
 
-        
-
+        <!-- Medium Post 2 -->
+        <div class="blog-card bg-white p-4 rounded-lg shadow-lg">
+          <a href="https://medium.com/@erendemirkandemir/building-aws-infrastructure-with-terraform-a-hands-on-iac-guide-with-generative-ai-reference-a04068bee457" target="_blank">
+            <img src="images/building-aws-infrastructure-with-terraform.webp" alt="Building AWS Infrastructure with Terraform" class="w-full h-48 object-cover rounded-lg">
+            <div class="blog-content mt-4">
+              <h3 class="text-xl font-semibold">Building AWS Infrastructure with Terraform: A Hands-On IaC Guide</h3>
+              <p>This article provides a hands-on guide for building AWS infrastructure using Terraform, focusing on Infrastructure as Code (IaC) principles.</p>
+              <span class="date text-gray-500">May 11, 2025</span>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
 
     <!-- 👤 About -->
     <section id="about" style="margin-top: 4rem;">
-      <h2>👤 About Me</h2>
+      <h2 class="text-3xl font-bold mb-4">👤 About Me</h2>
       <p>I'm Eren, a tech enthusiast actively learning and experimenting in the fields of artificial intelligence and data science. Through this blog, I aim to document my learning journey, share my projects, and hopefully inspire others along the way.</p>
     </section>
 
     <!-- ✉️ Contact -->
-    <section id="contact" style="margin-top: 2rem;">
-      <h2>✉️ Contact</h2>
-      <p>You can reach me via GitHub: <a href="https://github.com/Erendmrkndmr" target="_blank">Erendmrkndmr</a></p>
+    <section id="contact" class="mb-16">
+      <h2 class="text-3xl font-bold mb-4">✉️ Contact</h2>
+      <p>You can reach me via:</p>
+      <ul>
+        <li>GitHub: <a href="https://github.com/Erendmrkndmr" target="_blank" class="text-blue-600 hover:underline">Erendmrkndmr</a></li>
+        <li>LinkedIn: <a href="https://www.linkedin.com/in/eren-demirkan-demir/" target="_blank" class="text-blue-600 hover:underline">Eren Demirkan Demir</a></li>
+      </ul>
     </section>
   </main>
 

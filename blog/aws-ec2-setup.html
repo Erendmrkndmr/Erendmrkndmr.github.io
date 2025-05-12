@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>How I Set Up a Static Site on AWS EC2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="bg-white text-gray-800 font-sans">
+  <div class="max-w-2xl mx-auto py-12 px-4">
+    <header class="mb-10">
+      <a href="../index.html" class="text-blue-600 hover:underline text-sm">← Anasayfa</a>
+      <h1 class="text-3xl font-bold mt-2">How I Set Up a Static Site on AWS EC2</h1>
+      <p class="text-gray-500 text-sm">Yayın tarihi: May 7, 2025</p>
+    </header>
+    <main class="prose">
+
+      <p>In this blog post, I will walk you through the process of setting up a static website using AWS EC2, including configuring security, access, and deployment.</p>
+
+      <h2 class="text-xl font-semibold">1. EC2 Instance Setup</h2>
+      <p>First, I created an EC2 instance using Amazon Linux 2023 (x86_64). The reason for choosing this AMI is its lightweight structure, full compatibility with AWS, and built-in support for HTTPD.</p>
+
+      <h3 class="text-lg font-semibold">Steps:</h3>
+      <ol class="list-decimal list-inside">
+        <li>Launch EC2 instance with Amazon Linux 2023 AMI</li>
+        <li>Assign a public IP address to the instance</li>
+        <li>Install HTTPD server: <code>sudo dnf install httpd git -y</code></li>
+      </ol>
+
+      <h2 class="text-xl font-semibold">2. Security Configuration</h2>
+      <p>We configured the security group for SSH access and restricted it to my IP address for security reasons. Initially, I opened port 22 for all IPs, but later restricted it.</p>
+
+      <h3 class="text-lg font-semibold">Steps:</h3>
+      <ul class="list-inside">
+        <li>Open SSH (port 22) and restrict to specific IP addresses</li>
+        <li>Configure HTTP and HTTPS ports in the security group</li>
+      </ul>
+
+      <h2 class="text-xl font-semibold">3. Web Server Configuration</h2>
+      <p>For the web server, I used HTTPD (Apache) due to its stability and ease of use on Amazon Linux.</p>
+
+      <h3 class="text-lg font-semibold">Steps:</h3>
+      <ul class="list-inside">
+        <li>Install and configure HTTPD: <code>sudo systemctl start httpd</code></li>
+        <li>Configure the server to serve the static content from GitHub repository</li>
+      </ul>
+
+      <h2 class="text-xl font-semibold">4. Deploy the Website</h2>
+      <p>I cloned my GitHub repository and copied the files to the /var/www/html/ directory.</p>
+
+      <h3 class="text-lg font-semibold">Steps:</h3>
+      <ul class="list-inside">
+        <li>Clone the repository: <code>git clone https://github.com/Erendmrkndmr/Erendmrkndmr.github.io.git</code></li>
+        <li>Copy files to web server: <code>sudo cp -r Erendmrkndmr.github.io/. /var/www/html/</code></li>
+        <li>Restart HTTPD service: <code>sudo systemctl restart httpd</code></li>
+      </ul>
+
+      <h2 class="text-xl font-semibold">5. Security Hardening</h2>
+      <p>To secure certain parts of the site, I configured the HTTPD server to block access to sensitive files like <code>admin.html</code>.</p>
+
+      <h3 class="text-lg font-semibold">Steps:</h3>
+      <pre class="bg-gray-100 p-4 rounded-md">
+<Files "admin.html">
+  Require all denied
+</Files>
+      </pre>
+
+      <h2 class="text-xl font-semibold">6. System Resource Tracking</h2>
+      <p>Before and after Apache installation, I tracked system resources to compare the impact of running Apache on system performance.</p>
+
+      <h3 class="text-lg font-semibold">Steps:</h3>
+      <ul class="list-inside">
+        <li>Before Apache: <code>top -b -n1 > before.txt</code>, <code>free -m >> before.txt</code></li>
+        <li>After Apache: <code>top -b -n1 > after.txt</code>, <code>free -m >> after.txt</code></li>
+      </ul>
+
+      <h2 class="text-xl font-semibold">7. Log Tracking</h2>
+      <p>To monitor logs, I used the following commands:</p>
+
+      <h3 class="text-lg font-semibold">Steps:</h3>
+      <ul class="list-inside">
+        <li>Access log: <code>sudo tail -f /var/log/httpd/access_log</code></li>
+        <li>Error log: <code>sudo tail -f /var/log/httpd/error_log</code></li>
+      </ul>
+
+      <h2 class="text-xl font-semibold">8. Snapshot Creation</h2>
+      <p>To create a snapshot of the EC2 instance with all configurations and files, follow these steps:</p>
+
+      <h3 class="text-lg font-semibold">Steps:</h3>
+      <ul class="list-inside">
+        <li>Go to AWS Console → EC2 → Instances → Storage tab → Click on Volume ID → Actions → Create snapshot</li>
+      </ul>
+
+      <h2 class="text-xl font-semibold">9. Website Verification</h2>
+      <p>Finally, I verified that the website was accessible at the public URL</p>
+      
+
+      <h2 class="text-xl font-semibold">Challenges and Key Points to Note</h2>
+      <ul class="list-inside">
+        <li>Issue with connecting to EC2 instance due to missing route table entry for internet gateway (IGW).</li>
+        <li>Security group misconfiguration prevented access from the public.</li>
+        <li>Make sure public IP is assigned and security groups allow HTTP/HTTPS traffic.</li>
+      </ul>
+    </main>
+  </div>
+</body>
+</html>
