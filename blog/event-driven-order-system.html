@@ -1,13 +1,14 @@
+<!-- blog/event-driven-order-system.html -->
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Event-Driven Order System — Proje Özeti</title>
-  <meta name="description" content="Order API → Event Bus → birden fazla subscriber ile EDA yaklaşımı. FastAPI, RabbitMQ, PostgreSQL ve Outbox pattern." />
+  <title>Event-Driven Order System — Project Overview</title>
+  <meta name="description" content="Order API → Event Bus → multiple subscribers. FastAPI, RabbitMQ, PostgreSQL, and the Outbox pattern." />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../css/style.css" />
   <style>
-    body{max-width:940px;margin:40px auto;padding:0 16px;font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;line-height:1.55}
+    body{max-width:940px;margin:40px auto;padding:0 16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.55}
     .hero{margin-bottom:24px}
     .pill{display:inline-block;border:1px solid #e5e7eb;border-radius:999px;padding:.25rem .6rem;margin-right:.4rem;font-size:.85rem}
     pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:8px;overflow:auto}
@@ -20,7 +21,7 @@
 <body>
   <header class="hero">
     <h1>Event-Driven Order System</h1>
-    <p>Order API → Event Bus → birden fazla bağımsız servis. Outbox pattern ile RabbitMQ’ya yayın, Inventory → Payment → Notification zinciri.</p>
+    <p>Order API → Event Bus → multiple independent services. Publish to RabbitMQ via the <em>Outbox</em> pattern; Inventory → Payment → Notification flow.</p>
     <div>
       <span class="pill">FastAPI</span>
       <span class="pill">RabbitMQ</span>
@@ -33,55 +34,54 @@
   </header>
 
   <section>
-    <h2>Neler Yaptım?</h2>
+    <h2>What I Built</h2>
     <ul>
-      <li><strong>Order API</strong> siparişi alır ve <em>outbox</em> tablosuna <code>OrderPlaced</code> yazar.</li>
-      <li><strong>Outbox Publisher</strong> yeni event’leri RabbitMQ’ya yayınlar.</li>
-      <li><strong>Inventory</strong> <code>order.placed</code> tüketip stok kontrolü yapar; <code>inventory.reserved</code> veya <code>order.out_of_stock</code> üretir.</li>
-      <li><strong>Payment</strong> <code>inventory.reserved</code> tüketir; <code>payment.completed</code> / <code>payment.failed</code> üretir.</li>
-      <li><strong>Notification</strong> ödeme ve stok durumuna göre log/email simülasyonu yapar.</li>
+      <li><strong>Order API</strong> accepts an order and writes <code>OrderPlaced</code> into the <em>outbox</em> table.</li>
+      <li><strong>Outbox Publisher</strong> scans new outbox rows and publishes events to RabbitMQ.</li>
+      <li><strong>Inventory</strong> consumes <code>order.placed</code>, checks stock, and emits <code>inventory.reserved</code> or <code>order.out_of_stock</code>.</li>
+      <li><strong>Payment</strong> consumes <code>inventory.reserved</code> and emits <code>payment.completed</code> / <code>payment.failed</code>.</li>
+      <li><strong>Notification</strong> logs or simulates emails based on payment/stock results.</li>
     </ul>
-    <p>Bu tasarım yeni servislerin (Analytics, Loyalty vb.) yalnızca ilgili exchange’e abone olarak eklenebilmesini sağlar. :contentReference[oaicite:0]{index=0}</p>
+    <p>The design lets new services (Analytics, Loyalty, etc.) plug in simply by subscribing to the relevant exchange/routing key.</p>
   </section>
 
   <section class="grid">
     <div>
-      <h2>Hızlı Başlatma</h2>
+      <h2>Quick Start</h2>
       <ol>
-        <li><code>Docker</code> + <code>Docker Compose</code> kurulu olsun.</li>
-        <li>Klonla ve çalıştır:
+        <li>Ensure <code>Docker</code> and <code>Docker Compose</code> are installed.</li>
+        <li>Clone and run:
 <pre><code>git clone https://github.com/Erendmrkndmr/event-driven-order-system
 cd event-driven-order-system
 docker compose up -d
 </code></pre>
         </li>
-        <li>Kontrol:
+        <li>Check services:
 <pre><code>docker compose ps
-# Swagger: http://localhost:8000/docs
-# RabbitMQ UI: http://localhost:15672 (eda_user / eda_pass)
+# Swagger UI:  http://localhost:8000/docs
+# RabbitMQ UI: http://localhost:15672  (eda_user / eda_pass)
 </code></pre>
         </li>
       </ol>
-      <p>Detaylar README’de adım adım yer alıyor. :contentReference[oaicite:1]{index=1}</p>
     </div>
     <div>
-      <h2>Test Senaryoları</h2>
-      <p><strong>Happy Path</strong> (stok var):</p>
+      <h2>Test Scenarios</h2>
+      <p><strong>Happy Path</strong> (stock available):</p>
 <pre><code>curl -s -X POST http://localhost:8000/orders \
  -H "Content-Type: application/json" \
  -d '{"customer_id":"C100","email":"c100@example.com",
       "items":[{"sku":"TSHIRT-BLK-M","qty":1}]}'</code></pre>
-      <p>Beklenen: Inventory <code>RESERVED</code>, Payment <code>COMPLETED</code>, Notification log. :contentReference[oaicite:2]{index=2}</p>
-      <p><strong>Out of stock</strong> senaryosu ve DB sorgu örnekleri de README’de mevcut. :contentReference[oaicite:3]{index=3}</p>
+      <p>Expected: Inventory <code>RESERVED</code>, Payment <code>COMPLETED</code>, Notification log.</p>
+      <p>There are also out-of-stock paths and DB query examples in the repository.</p>
     </div>
   </section>
 
   <section>
-    <h2>Mimari Notlar</h2>
+    <h2>Architecture Notes</h2>
     <ul>
-      <li>Servisler ayrı Docker imajları → bağımsız ölçekleme, izole bağımlılıklar.</li>
-      <li>Outbox + RabbitMQ ile en az bir kez teslim (at-least-once) akış.</li>
-      <li>Yeni tüketici eklemek yalnızca ilgili routing key’e abone olmak kadar kolay. :contentReference[oaicite:4]{index=4}</li>
+      <li>Each service runs as an independent Docker image → isolated dependencies, independent scaling.</li>
+      <li>Outbox + RabbitMQ implements at-least-once delivery.</li>
+      <li>Adding a new consumer is just subscribing to the appropriate routing key.</li>
     </ul>
   </section>
 </body>

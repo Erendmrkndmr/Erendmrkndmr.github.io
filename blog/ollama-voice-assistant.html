@@ -1,13 +1,14 @@
+<!-- blog/ollama-voice-assistant.html -->
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Ollama Voice Assistant — Proje Özeti</title>
-  <meta name="description" content="Ollama tabanlı, persona seçilebilir, Jenkins pipeline ile otomatikleşmiş sesli & yazılı asistan." />
+  <title>Ollama Voice Assistant — Project Overview</title>
+  <meta name="description" content="Local LLM with selectable personas, automated via a Jenkins pipeline. Web UI + API with optional TTS/STT." />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../css/style.css" />
   <style>
-    body{max-width:940px;margin:40px auto;padding:0 16px;font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;line-height:1.55}
+    body{max-width:940px;margin:40px auto;padding:0 16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.55}
     .pill{display:inline-block;border:1px solid #e5e7eb;border-radius:999px;padding:.25rem .6rem;margin-right:.4rem;font-size:.85rem}
     pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:8px;overflow:auto}
     a.btn{display:inline-block;border:1px solid #ddd;border-radius:8px;padding:.5rem .8rem;text-decoration:none;margin-right:8px}
@@ -16,7 +17,7 @@
 <body>
   <header>
     <h1>Ollama Voice Assistant</h1>
-    <p>Yerel modellerle çalışan, <em>persona</em> seçilebilir, Jenkins pipeline ile uçtan uca otomasyonlu asistan (web UI + API + opsiyonel TTS/STT).</p>
+    <p>Runs on local models (Ollama), supports persona selection, and is automated end-to-end with a Jenkins pipeline (Web UI + API + optional TTS/STT).</p>
     <div>
       <span class="pill">Ollama</span>
       <span class="pill">FastAPI</span>
@@ -30,48 +31,48 @@
   </header>
 
   <section>
-    <h2>Öne Çıkanlar</h2>
+    <h2>Highlights</h2>
     <ul>
-      <li>Yerel LLM (Ollama) + persona seçimi (Customer Support, DevOps Advisor, Technical Coach). :contentReference[oaicite:5]{index=5}</li>
-      <li>Web UI üzerinden metin & ses etkileşimi; opsiyonel TTS (pyttsx3 vb.). :contentReference[oaicite:6]{index=6}</li>
-      <li>Parametrik Jenkins Pipeline: model çekme, servisleri ayağa kaldırma, health-check, smoke test, loglama. :contentReference[oaicite:7]{index=7}</li>
-      <li>Docker Compose ile tek komutla kurulum/çalıştırma. :contentReference[oaicite:8]{index=8}</li>
+      <li>Local LLM (Ollama) + persona selection (Customer Support, DevOps Advisor, Technical Coach).</li>
+      <li>Text & voice interaction via a simple web UI; optional TTS (e.g., pyttsx3) and STT.</li>
+      <li>Parameterized Jenkins pipeline: pulls model, boots services, health-checks, smoke tests, and logs.</li>
+      <li>Single-command setup with Docker Compose.</li>
     </ul>
   </section>
 
   <section>
-    <h2>Proje Yapısı</h2>
-    <pre><code>agents/            # FastAPI backend
+    <h2>Project Structure</h2>
+    <pre><code>agents/             # FastAPI backend
 ollama/persona_prompts/
-voice/             # TTS/STT (opsiyonel)
-docker/            # docker-compose.* ve Dockerfile
-jenkins/           # Jenkinsfile (pipeline)
-agents/ui/         # Web arayüzü (HTML, JS, CSS)
-.env.example        </code></pre>
-    <p>Detaylar README içinde yer alıyor. :contentReference[oaicite:9]{index=9}</p>
+voice/              # TTS/STT (optional)
+docker/             # docker-compose.* and Dockerfile
+jenkins/            # Jenkinsfile (pipeline)
+agents/ui/          # Web UI (HTML, JS, CSS)
+.env.example</code></pre>
+    <p>See the repository README for details.</p>
   </section>
 
   <section>
-    <h2>Kurulum & Çalıştırma</h2>
-    <h3>Seçenek A — Jenkins ile (önerilen)</h3>
+    <h2>Setup & Run</h2>
+    <h3>Option A — With Jenkins (recommended)</h3>
     <pre><code>docker compose -f docker/docker-compose.jenkins.yml up -d --build
-# Jenkins: http://localhost:8081 (CASC ile tanımlı admin)
-# "Build with Parameters" → model, persona, directive seç</code></pre>
+# Jenkins: http://localhost:8081  (admin via JCasC)
+# "Build with Parameters" → choose model, persona, directive</code></pre>
 
-    <h3>Seçenek B — Lokal</h3>
+    <h3>Option B — Local</h3>
     <pre><code>docker compose -f docker/docker-compose.yml up -d --build
 # Ollama API:  http://localhost:11434
 # Agent API:   http://localhost:8080
 # Web UI:      http://localhost:8080/ui/</code></pre>
 
-    <h3>Sağlık kontrolü</h3>
+    <h3>Health Checks</h3>
     <pre><code>curl -s http://localhost:8080/healthz
 curl -s http://localhost:8080/readyz</code></pre>
-    <p>Kurulum adımları ve .env değişkenleri README’de listelenmiştir. :contentReference[oaicite:10]{index=10}</p>
+    <p>Environment variables and additional instructions are documented in the README.</p>
   </section>
 
   <section>
-    <h2>API Örneği</h2>
+    <h2>API Example</h2>
 <pre><code>curl -s http://localhost:8080/chat -H 'Content-Type: application/json' -d '{
   "persona":"DevOps Advisor",
   "directive":"Be concise and accurate.",
@@ -79,7 +80,7 @@ curl -s http://localhost:8080/readyz</code></pre>
   "model":"phi3:mini",
   "speak": false
 }'</code></pre>
-  <p>Örnek yanıt ve pipeline adımları README’de gösterilmiştir. :contentReference[oaicite:11]{index=11}</p>
+    <p>Example responses and pipeline steps are provided in the repository.</p>
   </section>
 </body>
 </html>
