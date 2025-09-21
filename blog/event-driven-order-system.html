@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <title>Event-Driven Order System — Proje Özeti</title>
+  <meta name="description" content="Order API → Event Bus → birden fazla subscriber ile EDA yaklaşımı. FastAPI, RabbitMQ, PostgreSQL ve Outbox pattern." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    body{max-width:940px;margin:40px auto;padding:0 16px;font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;line-height:1.55}
+    .hero{margin-bottom:24px}
+    .pill{display:inline-block;border:1px solid #e5e7eb;border-radius:999px;padding:.25rem .6rem;margin-right:.4rem;font-size:.85rem}
+    pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:8px;overflow:auto}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .grid{display:grid;gap:16px}
+    @media(min-width:780px){.grid{grid-template-columns:1fr 1fr}}
+    a.btn{display:inline-block;border:1px solid #ddd;border-radius:8px;padding:.5rem .8rem;text-decoration:none;margin-right:8px}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <h1>Event-Driven Order System</h1>
+    <p>Order API → Event Bus → birden fazla bağımsız servis. Outbox pattern ile RabbitMQ’ya yayın, Inventory → Payment → Notification zinciri.</p>
+    <div>
+      <span class="pill">FastAPI</span>
+      <span class="pill">RabbitMQ</span>
+      <span class="pill">PostgreSQL</span>
+      <span class="pill">Docker Compose</span>
+    </div>
+    <p>
+      <a class="btn" href="https://github.com/Erendmrkndmr/event-driven-order-system" target="_blank" rel="noopener">GitHub</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Neler Yaptım?</h2>
+    <ul>
+      <li><strong>Order API</strong> siparişi alır ve <em>outbox</em> tablosuna <code>OrderPlaced</code> yazar.</li>
+      <li><strong>Outbox Publisher</strong> yeni event’leri RabbitMQ’ya yayınlar.</li>
+      <li><strong>Inventory</strong> <code>order.placed</code> tüketip stok kontrolü yapar; <code>inventory.reserved</code> veya <code>order.out_of_stock</code> üretir.</li>
+      <li><strong>Payment</strong> <code>inventory.reserved</code> tüketir; <code>payment.completed</code> / <code>payment.failed</code> üretir.</li>
+      <li><strong>Notification</strong> ödeme ve stok durumuna göre log/email simülasyonu yapar.</li>
+    </ul>
+    <p>Bu tasarım yeni servislerin (Analytics, Loyalty vb.) yalnızca ilgili exchange’e abone olarak eklenebilmesini sağlar. :contentReference[oaicite:0]{index=0}</p>
+  </section>
+
+  <section class="grid">
+    <div>
+      <h2>Hızlı Başlatma</h2>
+      <ol>
+        <li><code>Docker</code> + <code>Docker Compose</code> kurulu olsun.</li>
+        <li>Klonla ve çalıştır:
+<pre><code>git clone https://github.com/Erendmrkndmr/event-driven-order-system
+cd event-driven-order-system
+docker compose up -d
+</code></pre>
+        </li>
+        <li>Kontrol:
+<pre><code>docker compose ps
+# Swagger: http://localhost:8000/docs
+# RabbitMQ UI: http://localhost:15672 (eda_user / eda_pass)
+</code></pre>
+        </li>
+      </ol>
+      <p>Detaylar README’de adım adım yer alıyor. :contentReference[oaicite:1]{index=1}</p>
+    </div>
+    <div>
+      <h2>Test Senaryoları</h2>
+      <p><strong>Happy Path</strong> (stok var):</p>
+<pre><code>curl -s -X POST http://localhost:8000/orders \
+ -H "Content-Type: application/json" \
+ -d '{"customer_id":"C100","email":"c100@example.com",
+      "items":[{"sku":"TSHIRT-BLK-M","qty":1}]}'</code></pre>
+      <p>Beklenen: Inventory <code>RESERVED</code>, Payment <code>COMPLETED</code>, Notification log. :contentReference[oaicite:2]{index=2}</p>
+      <p><strong>Out of stock</strong> senaryosu ve DB sorgu örnekleri de README’de mevcut. :contentReference[oaicite:3]{index=3}</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mimari Notlar</h2>
+    <ul>
+      <li>Servisler ayrı Docker imajları → bağımsız ölçekleme, izole bağımlılıklar.</li>
+      <li>Outbox + RabbitMQ ile en az bir kez teslim (at-least-once) akış.</li>
+      <li>Yeni tüketici eklemek yalnızca ilgili routing key’e abone olmak kadar kolay. :contentReference[oaicite:4]{index=4}</li>
+    </ul>
+  </section>
+</body>
+</html>
